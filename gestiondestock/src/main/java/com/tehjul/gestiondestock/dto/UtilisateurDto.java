@@ -22,7 +22,7 @@ public class UtilisateurDto {
 
     private Instant dateDeNaissance;
 
-    private String moteDePasse;
+    private String motDePasse;
 
     private AdresseDto adresse;
 
@@ -42,7 +42,7 @@ public class UtilisateurDto {
                 .nom(utilisateur.getNom())
                 .prenom(utilisateur.getPrenom())
                 .email(utilisateur.getEmail())
-                .moteDePasse(utilisateur.getMotDePasse())
+                .motDePasse(utilisateur.getMotDePasse())
                 .dateDeNaissance(utilisateur.getDateDeNaissance())
                 .adresse(AdresseDto.fromEntity(utilisateur.getAdresse()))
                 .photo(utilisateur.getPhoto())
@@ -66,7 +66,7 @@ public class UtilisateurDto {
         utilisateur.setNom(dto.getNom());
         utilisateur.setPrenom(dto.getPrenom());
         utilisateur.setEmail(dto.getEmail());
-        utilisateur.setMotDePasse(dto.getMoteDePasse());
+        utilisateur.setMotDePasse(dto.getMotDePasse());
         utilisateur.setDateDeNaissance(dto.getDateDeNaissance());
         utilisateur.setAdresse(AdresseDto.toEntity(dto.getAdresse()));
         utilisateur.setPhoto(dto.getPhoto());
