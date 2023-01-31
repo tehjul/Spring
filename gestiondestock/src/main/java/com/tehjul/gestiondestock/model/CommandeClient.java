@@ -7,7 +7,6 @@ import java.time.Instant;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -20,6 +19,13 @@ public class CommandeClient extends AbstractEntity {
 
     @Column
     private Instant dateCommande;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private EtatCommande etatCommande;
+
+    @Column
+    private Integer idEntreprise;
 
     @ManyToOne
     @JoinColumn(name = "idclient")

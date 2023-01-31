@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,7 +8,6 @@ import java.time.Instant;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -40,7 +40,8 @@ public class Utilisateur extends AbstractEntity {
     @JoinColumn(name = "identreprise")
     private Entreprise entreprise;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "utilisateur")
+    @JsonIgnore
     private List<Roles> roles;
 
 }

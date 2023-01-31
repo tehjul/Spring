@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -27,4 +26,11 @@ public class MvtStk extends AbstractEntity {
 
     @Column
     private TypeMvtStk typeMvt;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private SourceMvtStk sourceMvt;
+
+    @Column
+    private Integer idEntreprise;
 }

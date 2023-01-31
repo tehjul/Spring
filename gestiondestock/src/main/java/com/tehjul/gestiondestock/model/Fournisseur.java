@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -31,6 +30,9 @@ public class Fournisseur extends AbstractEntity {
 
     @Column
     private String numTel;
+
+    @Column
+    private Integer idEntreprise;
 
     @OneToMany(mappedBy = "fournisseur")
     private List<CommandeFournisseur> commandeFournisseur;

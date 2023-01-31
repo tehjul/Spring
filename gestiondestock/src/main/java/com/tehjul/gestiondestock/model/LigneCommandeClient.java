@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -27,4 +26,7 @@ public class LigneCommandeClient extends AbstractEntity {
 
     @Column
     private BigDecimal prixUnitaire;
+
+    @Column
+    private Integer idEntreprise;
 }

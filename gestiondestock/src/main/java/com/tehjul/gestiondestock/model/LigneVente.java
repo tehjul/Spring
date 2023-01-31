@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -18,9 +17,16 @@ public class LigneVente extends AbstractEntity {
     @JoinColumn(name = "idvente")
     private Ventes ventes;
 
+    @ManyToOne
+    @JoinColumn(name = "idarticle")
+    private Article article;
+
     @Column
     private BigDecimal quantite;
 
     @Column
     private BigDecimal prixUnitaire;
+
+    @Column
+    private Integer idEntreprise;
 }
