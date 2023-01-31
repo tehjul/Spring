@@ -1,15 +1,12 @@
 package com.tehjul.gestiondestock.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -19,4 +16,28 @@ public class Entreprise extends AbstractEntity {
 
     @Column
     private String nom;
+
+    @Column
+    private String description;
+
+    @Embedded
+    private Adresse adresse;
+
+    @Column
+    private String codeFiscal;
+
+    @Column
+    private String photo;
+
+    @Column
+    private String email;
+
+    @Column
+    private String numTel;
+
+    @Column
+    private String siteWeb;
+
+    @OneToMany(mappedBy = "entreprise")
+    private List<Utilisateur> utilisateurs;
 }

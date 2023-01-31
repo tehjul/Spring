@@ -1,15 +1,13 @@
 package com.tehjul.gestiondestock.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.Instant;
+import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -19,4 +17,30 @@ public class Utilisateur extends AbstractEntity {
 
     @Column
     private String nom;
+
+    @Column
+    private String prenom;
+
+    @Column
+    private String email;
+
+    @Column
+    private Instant dateDeNaissance;
+
+    @Column
+    private String motDePasse;
+
+    @Embedded
+    private Adresse adresse;
+
+    @Column
+    private String photo;
+
+    @ManyToOne
+    @JoinColumn(name = "identreprise")
+    private Entreprise entreprise;
+
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Roles> roles;
+
 }

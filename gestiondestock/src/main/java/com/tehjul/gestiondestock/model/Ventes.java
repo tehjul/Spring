@@ -1,14 +1,14 @@
 package com.tehjul.gestiondestock.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.Instant;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -16,6 +16,12 @@ import javax.persistence.Table;
 @Table
 public class Ventes extends AbstractEntity {
 
-    // FIXME
+    @Column
     private String code;
+
+    @Column
+    private Instant dateVente;
+
+    @Column
+    private String commentaire;
 }
