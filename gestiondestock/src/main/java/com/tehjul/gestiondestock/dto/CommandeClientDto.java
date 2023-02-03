@@ -38,7 +38,6 @@ public class CommandeClientDto {
                 .client(ClientDto.fromEntity(commandeClient.getClient()))
                 .idEntreprise(commandeClient.getIdEntreprise())
                 .build();
-
     }
 
     public static CommandeClient toEntity(CommandeClientDto dto) {
