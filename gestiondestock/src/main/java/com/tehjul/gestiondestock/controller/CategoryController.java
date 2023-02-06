@@ -4,9 +4,11 @@ import com.tehjul.gestiondestock.controller.api.CategoryApi;
 import com.tehjul.gestiondestock.dto.CategoryDto;
 import com.tehjul.gestiondestock.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class CategoryController implements CategoryApi {
 
     private final CategoryService categoryService;

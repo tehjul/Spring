@@ -1,13 +1,14 @@
 package com.tehjul.gestiondestock.controller.api;
 
 import com.tehjul.gestiondestock.dto.UtilisateurDto;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.UTILISATEUR_ENDPOINT;
 
-@RestController
+@Api(UTILISATEUR_ENDPOINT)
 public interface UtilisateurApi {
 
     @PostMapping(UTILISATEUR_ENDPOINT + "/create")

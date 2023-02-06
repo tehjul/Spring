@@ -4,9 +4,11 @@ import com.tehjul.gestiondestock.controller.api.UtilisateurApi;
 import com.tehjul.gestiondestock.dto.UtilisateurDto;
 import com.tehjul.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class UtilisateurController implements UtilisateurApi {
 
     private final UtilisateurService utilisateurService;

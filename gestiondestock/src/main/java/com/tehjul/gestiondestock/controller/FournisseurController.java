@@ -4,9 +4,11 @@ import com.tehjul.gestiondestock.controller.api.FournisseurApi;
 import com.tehjul.gestiondestock.dto.FournisseurDto;
 import com.tehjul.gestiondestock.services.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class FournisseurController implements FournisseurApi {
 
     private final FournisseurService fournisseurService;
