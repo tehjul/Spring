@@ -48,7 +48,7 @@ public interface ArticleApi {
     List<ArticleDto> findAll();
 
     @DeleteMapping(value = APP_ROOT + "/articles/delete/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Supprimer un article par ID", notes = "Cette méthode permet de supprimer un article par son ID)", response = ArticleDto.class)
+    @ApiOperation(value = "Supprimer un article par ID", notes = "Cette méthode permet de supprimer un article par son ID)")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'article a été supprimé de la BDD")
     })
