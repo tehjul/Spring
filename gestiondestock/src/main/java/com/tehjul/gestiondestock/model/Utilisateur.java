@@ -37,7 +37,7 @@ public class Utilisateur extends AbstractEntity {
     private String photo;
 
     @ManyToOne
-    @JoinColumn(name = "identreprise")
+    @JoinColumn(name = "id_entreprise")
     private Entreprise entreprise;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "utilisateur")
