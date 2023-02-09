@@ -1,6 +1,7 @@
 package com.tehjul.gestiondestock.controller.api;
 
 import com.tehjul.gestiondestock.dto.CommandeClientDto;
+import com.tehjul.gestiondestock.model.EtatCommande;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ public interface CommandeClientApi {
 
     @PostMapping(COMMANDE_CLIENT_ENDPOINT + "/create")
     ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto dto);
+
+    @PatchMapping(COMMANDE_CLIENT_ENDPOINT + "/update/{idCommande}/{etatCommande}")
+    ResponseEntity<CommandeClientDto> updateEtatCommande(@PathVariable Integer idCommande, @PathVariable EtatCommande etatCommande);
 
     @GetMapping(COMMANDE_CLIENT_ENDPOINT + "/{idCommandeClient}")
     ResponseEntity<CommandeClientDto> findById(@PathVariable Integer idCommandeClient);
