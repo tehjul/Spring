@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tehjul.gestiondestock.model.CommandeClient;
 import com.tehjul.gestiondestock.model.EtatCommande;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class CommandeClientDto {
 
     private Integer idEntreprise;
 
+    @JsonIgnore
     private List<LigneCommandeClientDto> ligneCommandeClients;
 
     public static CommandeClientDto fromEntity(CommandeClient commandeClient) {
