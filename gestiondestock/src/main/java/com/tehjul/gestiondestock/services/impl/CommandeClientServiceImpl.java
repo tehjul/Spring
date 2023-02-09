@@ -183,6 +183,20 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
+    public CommandeClientDto deleteArticle(Integer idCommande, Integer idLigneCommande) {
+        checkIdCommande(idCommande);
+        checkIdLigneCommande(idLigneCommande);
+
+        CommandeClientDto commandeClientDto = checkEtatCommande(idCommande);
+
+        // Just to check LigneCommandeClient and inform the client in case it is absent
+        findLigneCommandeClient(idLigneCommande);
+        ligneCommandeClientRepository.deleteById(idLigneCommande);
+
+        return commandeClientDto;
+    }
+
+    @Override
     public CommandeClientDto findById(Integer id) {
         if (id == null) {
             log.error("Commande client ID is NULL");
