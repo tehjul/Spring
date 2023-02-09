@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.COMMANDE_CLIENT_ENDPOINT;
@@ -18,6 +19,9 @@ public interface CommandeClientApi {
 
     @PatchMapping(COMMANDE_CLIENT_ENDPOINT + "/update/{idCommande}/{etatCommande}")
     ResponseEntity<CommandeClientDto> updateEtatCommande(@PathVariable Integer idCommande, @PathVariable EtatCommande etatCommande);
+
+    @PatchMapping(COMMANDE_CLIENT_ENDPOINT + "/update/{idCommande}/{idLigneCommande}/{quantite}")
+    ResponseEntity<CommandeClientDto> updateQuantiteCommande(@PathVariable Integer idCommande, @PathVariable Integer idLigneCommande, @PathVariable BigDecimal quantite);
 
     @GetMapping(COMMANDE_CLIENT_ENDPOINT + "/{idCommandeClient}")
     ResponseEntity<CommandeClientDto> findById(@PathVariable Integer idCommandeClient);
