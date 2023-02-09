@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tehjul.gestiondestock.model.CommandeFournisseur;
 import com.tehjul.gestiondestock.model.EtatCommande;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class CommandeFournisseurDto {
 
     private Integer idEntreprise;
 
+    @JsonIgnore
     private List<LigneCommandeFournisseurDto> ligneCommandeFournisseurs;
 
     public static CommandeFournisseurDto fromEntity(CommandeFournisseur commandeFournisseur) {
