@@ -1,6 +1,7 @@
 package com.tehjul.gestiondestock.services;
 
 import com.tehjul.gestiondestock.dto.CommandeClientDto;
+import com.tehjul.gestiondestock.dto.LigneCommandeClientDto;
 import com.tehjul.gestiondestock.model.EtatCommande;
 
 import java.math.BigDecimal;
@@ -26,6 +27,8 @@ public interface CommandeClientService {
     CommandeClientDto findByCode(String code);
 
     List<CommandeClientDto> findAll();
+
+    List<LigneCommandeClientDto> findAllLignesCommandesClientByCommandeClientId(Integer idCommande);
 
     void delete(Integer id);
 

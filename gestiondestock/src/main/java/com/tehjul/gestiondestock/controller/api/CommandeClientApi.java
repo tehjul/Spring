@@ -1,6 +1,7 @@
 package com.tehjul.gestiondestock.controller.api;
 
 import com.tehjul.gestiondestock.dto.CommandeClientDto;
+import com.tehjul.gestiondestock.dto.LigneCommandeClientDto;
 import com.tehjul.gestiondestock.model.EtatCommande;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,9 @@ public interface CommandeClientApi {
 
     @GetMapping(COMMANDE_CLIENT_ENDPOINT + "/all")
     ResponseEntity<List<CommandeClientDto>> findAll();
+
+    @GetMapping(COMMANDE_CLIENT_ENDPOINT + "/lignesCommande/{idCommande}")
+    ResponseEntity<List<LigneCommandeClientDto>> findAllLignesCommandesClientByCommandeClientId(@PathVariable Integer idCommande);
 
     @DeleteMapping(COMMANDE_CLIENT_ENDPOINT + "/delete/{idCommandeClient}")
     ResponseEntity delete(@PathVariable("idCommandeClient") Integer id);

@@ -2,6 +2,7 @@ package com.tehjul.gestiondestock.controller;
 
 import com.tehjul.gestiondestock.controller.api.CommandeClientApi;
 import com.tehjul.gestiondestock.dto.CommandeClientDto;
+import com.tehjul.gestiondestock.dto.LigneCommandeClientDto;
 import com.tehjul.gestiondestock.model.EtatCommande;
 import com.tehjul.gestiondestock.services.CommandeClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,11 @@ public class CommandeClientController implements CommandeClientApi {
     @Override
     public ResponseEntity<List<CommandeClientDto>> findAll() {
         return ResponseEntity.ok(commandeClientService.findAll());
+    }
+
+    @Override
+    public ResponseEntity<List<LigneCommandeClientDto>> findAllLignesCommandesClientByCommandeClientId(Integer idCommande) {
+        return ResponseEntity.ok(commandeClientService.findAllLignesCommandesClientByCommandeClientId(idCommande));
     }
 
     @Override
