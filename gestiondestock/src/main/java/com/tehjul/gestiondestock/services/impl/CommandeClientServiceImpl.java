@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.services.impl;
 
+import com.tehjul.gestiondestock.dto.ClientDto;
 import com.tehjul.gestiondestock.dto.CommandeClientDto;
 import com.tehjul.gestiondestock.dto.LigneCommandeClientDto;
 import com.tehjul.gestiondestock.exception.EntityNotFoundException;
@@ -148,6 +149,36 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         ligneCommandeClientRepository.save(ligneCommandeClient);
 
         return commandeClient;
+    }
+
+    @Override
+    public CommandeClientDto updateClient(Integer idCommande, Integer idClient) {
+        if (idCommande == null) {
+            log.error("Commande client ID is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+        if (idClient == null) {
+            log.error("Client ID is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID client null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+
+        CommandeClientDto commandeClient = findById(idCommande);
+        if (commandeClient.isCommandeLivree()) {
+            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+
+        Optional<Client> clientOptional = clientRepository.findById(idClient);
+        if (clientOptional.isEmpty()) {
+            throw new EntityNotFoundException("Aucun client n'a été trouvée avec l'ID " + idClient, ErrorCodes.CLIENT_NOT_FOUND);
+        }
+
+        commandeClient.setClient(ClientDto.fromEntity(clientOptional.get()));
+
+        return CommandeClientDto.fromEntity(
+                commandeClientRepository.save(
+                        CommandeClientDto.toEntity(commandeClient)
+                )
+        );
     }
 
     @Override
