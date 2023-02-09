@@ -26,6 +26,9 @@ public interface CommandeClientApi {
     @PatchMapping(COMMANDE_CLIENT_ENDPOINT + "/update/client/{idCommande}/{idClient}")
     ResponseEntity<CommandeClientDto> updateClient(@PathVariable Integer idCommande, @PathVariable Integer idClient);
 
+    @PatchMapping(COMMANDE_CLIENT_ENDPOINT + "/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
+    ResponseEntity<CommandeClientDto> updateArticle(@PathVariable Integer idCommande, @PathVariable Integer idLigneCommande, @PathVariable Integer idArticle);
+
     @GetMapping(COMMANDE_CLIENT_ENDPOINT + "/{idCommandeClient}")
     ResponseEntity<CommandeClientDto> findById(@PathVariable Integer idCommandeClient);
 

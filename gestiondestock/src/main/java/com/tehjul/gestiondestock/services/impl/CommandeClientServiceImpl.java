@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.services.impl;
 
+import com.tehjul.gestiondestock.dto.ArticleDto;
 import com.tehjul.gestiondestock.dto.ClientDto;
 import com.tehjul.gestiondestock.dto.CommandeClientDto;
 import com.tehjul.gestiondestock.dto.LigneCommandeClientDto;
@@ -13,6 +14,7 @@ import com.tehjul.gestiondestock.repository.ClientRepository;
 import com.tehjul.gestiondestock.repository.CommandeClientRepository;
 import com.tehjul.gestiondestock.repository.LigneCommandeClientRepository;
 import com.tehjul.gestiondestock.services.CommandeClientService;
+import com.tehjul.gestiondestock.validator.ArticleValidator;
 import com.tehjul.gestiondestock.validator.CommandeClientValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,20 +97,13 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
     @Override
     public CommandeClientDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande) {
-        if (idCommande == null) {
-            log.error("Commande client ID is NULL");
-            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
+        checkIdCommande(idCommande);
         if (!StringUtils.hasLength(String.valueOf(etatCommande))) {
             log.error("L'état de la commande client is NULL");
             throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un etat null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
         }
 
-        CommandeClientDto commandeClient = findById(idCommande);
-
-        if (commandeClient.isCommandeLivree()) {
-            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
+        CommandeClientDto commandeClient = checkEtatCommande(idCommande);
 
         commandeClient.setEtatCommande(etatCommande);
 
@@ -119,30 +114,15 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
     @Override
     public CommandeClientDto updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite) {
-        if (idCommande == null) {
-            log.error("Commande client ID is NULL");
-            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
-        if (idLigneCommande == null) {
-            log.error("Ligne commande ID is NULL");
-            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID ligne commande null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
+        checkIdCommande(idCommande);
+        checkIdLigneCommande(idLigneCommande);
         if (quantite == null || quantite.compareTo(BigDecimal.ZERO) == 0) {
             log.error("quantité null ou zéro");
             throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un quantité null ou zéro", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
         }
+        CommandeClientDto commandeClient = checkEtatCommande(idCommande);
 
-        CommandeClientDto commandeClient = findById(idCommande);
-
-        if (commandeClient.isCommandeLivree()) {
-            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
-
-        Optional<LigneCommandeClient> ligneCommandeClientOptional = ligneCommandeClientRepository.findById(idLigneCommande);
-
-        if (ligneCommandeClientOptional.isEmpty()) {
-            throw new EntityNotFoundException("Aucune ligne commande client n'a été trouvée avec l'ID " + idLigneCommande, ErrorCodes.LIGNE_COMMANDE_CLIENT_NOT_FOUND);
-        }
+        Optional<LigneCommandeClient> ligneCommandeClientOptional = findLigneCommandeClient(idLigneCommande);
 
         LigneCommandeClient ligneCommandeClient = ligneCommandeClientOptional.get();
         ligneCommandeClient.setQuantite(quantite);
@@ -153,19 +133,13 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
     @Override
     public CommandeClientDto updateClient(Integer idCommande, Integer idClient) {
-        if (idCommande == null) {
-            log.error("Commande client ID is NULL");
-            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
+        checkIdCommande(idCommande);
         if (idClient == null) {
             log.error("Client ID is NULL");
             throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID client null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
         }
 
-        CommandeClientDto commandeClient = findById(idCommande);
-        if (commandeClient.isCommandeLivree()) {
-            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
-        }
+        CommandeClientDto commandeClient = checkEtatCommande(idCommande);
 
         Optional<Client> clientOptional = clientRepository.findById(idClient);
         if (clientOptional.isEmpty()) {
@@ -179,6 +153,33 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                         CommandeClientDto.toEntity(commandeClient)
                 )
         );
+    }
+
+    @Override
+    public CommandeClientDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer idArticle) {
+        checkIdCommande(idCommande);
+        checkIdLigneCommande(idLigneCommande);
+        checkIdArticle(idArticle, "nouvel");
+
+        CommandeClientDto commandeClientDto = checkEtatCommande(idCommande);
+
+        Optional<LigneCommandeClient> ligneCommandeClient = findLigneCommandeClient(idLigneCommande);
+
+        Optional<Article> articleOptional = articleRepository.findById(idArticle);
+        if (articleOptional.isEmpty()) {
+            throw new EntityNotFoundException("Aucune article n'a été trouvée avec l'ID " + idArticle, ErrorCodes.ARTICLE_NOT_FOUND);
+        }
+
+        List<String> errors = ArticleValidator.validate(ArticleDto.fromEntity(articleOptional.get()));
+        if (!errors.isEmpty()) {
+            throw new InvalidEntityException("Article invalide", ErrorCodes.ARTICLE_NOT_VALID, errors);
+        }
+
+        LigneCommandeClient ligneCommandeClientToSaved = ligneCommandeClient.get();
+        ligneCommandeClientToSaved.setArticle(articleOptional.get());
+        ligneCommandeClientRepository.save(ligneCommandeClientToSaved);
+
+        return commandeClientDto;
     }
 
     @Override
@@ -221,5 +222,42 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             return;
         }
         commandeClientRepository.deleteById(id);
+    }
+
+    private void checkIdCommande(Integer idCommande) {
+        if (idCommande == null) {
+            log.error("Commande client ID is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+    }
+
+    private void checkIdLigneCommande(Integer idLigneCommande) {
+        if (idLigneCommande == null) {
+            log.error("Ligne commande ID is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un ID ligne commande null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+    }
+
+    private void checkIdArticle(Integer idArticle, String message) {
+        if (idArticle == null) {
+            log.error("Article ID is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'état de la commande avec un " + message + " ID article null", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+    }
+
+    private CommandeClientDto checkEtatCommande(Integer idCommande) {
+        CommandeClientDto commandeClient = findById(idCommande);
+        if (commandeClient.isCommandeLivree()) {
+            throw new InvalidOperationException("Impossible de modifier la commande lorsqu'elle est livrée", ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+        return commandeClient;
+    }
+
+    private Optional<LigneCommandeClient> findLigneCommandeClient(Integer idLigneCommande) {
+        Optional<LigneCommandeClient> ligneCommandeClientOptional = ligneCommandeClientRepository.findById(idLigneCommande);
+        if (ligneCommandeClientOptional.isEmpty()) {
+            throw new EntityNotFoundException("Aucune ligne commande client n'a été trouvée avec l'ID " + idLigneCommande, ErrorCodes.LIGNE_COMMANDE_CLIENT_NOT_FOUND);
+        }
+        return ligneCommandeClientOptional;
     }
 }
