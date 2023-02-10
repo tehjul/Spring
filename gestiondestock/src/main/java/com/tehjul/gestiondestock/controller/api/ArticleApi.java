@@ -1,6 +1,9 @@
 package com.tehjul.gestiondestock.controller.api;
 
 import com.tehjul.gestiondestock.dto.ArticleDto;
+import com.tehjul.gestiondestock.dto.LigneCommandeClientDto;
+import com.tehjul.gestiondestock.dto.LigneCommandeFournisseurDto;
+import com.tehjul.gestiondestock.dto.LigneVenteDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,6 +49,18 @@ public interface ArticleApi {
             @ApiResponse(code = 200, message = "La liste des articles a été trouvée dans la BDD")
     })
     List<ArticleDto> findAll();
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/historique/vente/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LigneVenteDto> findHistoriqueVentes(@PathVariable Integer idArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/historique/commandeclient/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LigneCommandeClientDto> findHistoriqueCommandesClient(@PathVariable Integer idArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/historique/commandefournisseur/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(@PathVariable Integer idArticle);
+
+    @GetMapping(value = ARTICLE_ENDPOINT + "/filter/category/{idCategory}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<ArticleDto> findAllArticleByIdCategory(@PathVariable Integer idCategory);
 
     @DeleteMapping(value = ARTICLE_ENDPOINT + "/delete/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Supprimer un article par ID", notes = "Cette méthode permet de supprimer un article par son ID)")
