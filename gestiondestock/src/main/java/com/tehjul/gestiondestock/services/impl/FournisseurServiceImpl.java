@@ -4,6 +4,10 @@ import com.tehjul.gestiondestock.dto.FournisseurDto;
 import com.tehjul.gestiondestock.exception.EntityNotFoundException;
 import com.tehjul.gestiondestock.exception.ErrorCodes;
 import com.tehjul.gestiondestock.exception.InvalidEntityException;
+import com.tehjul.gestiondestock.exception.InvalidOperationException;
+import com.tehjul.gestiondestock.model.CommandeClient;
+import com.tehjul.gestiondestock.model.CommandeFournisseur;
+import com.tehjul.gestiondestock.repository.CommandeFournisseurRepository;
 import com.tehjul.gestiondestock.repository.FournisseurRepository;
 import com.tehjul.gestiondestock.services.FournisseurService;
 import com.tehjul.gestiondestock.validator.FournisseurValidator;
@@ -12,17 +16,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class FournisseurServiceImpl implements FournisseurService {
+    private final CommandeFournisseurRepository commandeFournisseurRepository;
 
     private final FournisseurRepository fournisseurRepository;
 
     @Autowired
-    public FournisseurServiceImpl(FournisseurRepository fournisseurRepository) {
+    public FournisseurServiceImpl(FournisseurRepository fournisseurRepository,
+                                  CommandeFournisseurRepository commandeFournisseurRepository) {
         this.fournisseurRepository = fournisseurRepository;
+        this.commandeFournisseurRepository = commandeFournisseurRepository;
     }
 
     @Override
@@ -66,6 +74,10 @@ public class FournisseurServiceImpl implements FournisseurService {
         if (id == null) {
             log.error("Fournisseur ID is null");
             return;
+        }
+        List<CommandeFournisseur> commandeFournisseurs = commandeFournisseurRepository.findAllByFournisseurId(id);
+        if (!commandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un fournisseur qui a déjà des commandes fournisseur", ErrorCodes.FOURNISSEUR_ALREADY_IN_USE);
         }
         fournisseurRepository.deleteById(id);
     }

@@ -4,7 +4,10 @@ import com.tehjul.gestiondestock.dto.CategoryDto;
 import com.tehjul.gestiondestock.exception.EntityNotFoundException;
 import com.tehjul.gestiondestock.exception.ErrorCodes;
 import com.tehjul.gestiondestock.exception.InvalidEntityException;
+import com.tehjul.gestiondestock.exception.InvalidOperationException;
+import com.tehjul.gestiondestock.model.Article;
 import com.tehjul.gestiondestock.model.Category;
+import com.tehjul.gestiondestock.repository.ArticleRepository;
 import com.tehjul.gestiondestock.repository.CategoryRepository;
 import com.tehjul.gestiondestock.services.CategoryService;
 import com.tehjul.gestiondestock.validator.CategoryValidator;
@@ -21,11 +24,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
+        this.articleRepository = articleRepository;
     }
 
     @Override
@@ -84,6 +89,10 @@ public class CategoryServiceImpl implements CategoryService {
         if (id == null) {
             log.error("Category ID is null");
             return;
+        }
+        List<Article> articles = articleRepository.findAllByCategoryId(id);
+        if (!articles.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une catégorie déjà utilisée dans pour des articles", ErrorCodes.CATEGORY_ALREADY_IN_USE);
         }
         categoryRepository.deleteById(id);
     }

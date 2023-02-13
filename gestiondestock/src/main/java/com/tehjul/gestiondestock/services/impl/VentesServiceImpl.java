@@ -7,6 +7,7 @@ import com.tehjul.gestiondestock.dto.VentesDto;
 import com.tehjul.gestiondestock.exception.EntityNotFoundException;
 import com.tehjul.gestiondestock.exception.ErrorCodes;
 import com.tehjul.gestiondestock.exception.InvalidEntityException;
+import com.tehjul.gestiondestock.exception.InvalidOperationException;
 import com.tehjul.gestiondestock.model.*;
 import com.tehjul.gestiondestock.repository.ArticleRepository;
 import com.tehjul.gestiondestock.repository.LigneVenteRepository;
@@ -111,6 +112,10 @@ public class VentesServiceImpl implements VentesService {
         if (id == null) {
             log.error("Ventes ID is NULL");
             return;
+        }
+        List<LigneVente> ligneVentes = ligneVenteRepository.findAllByVentesId(id);
+        if (!ligneVentes.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer une vente déjà utilisée", ErrorCodes.VENTE_ALREADY_IN_USE);
         }
         ventesRepository.deleteById(id);
     }

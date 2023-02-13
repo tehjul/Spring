@@ -5,7 +5,10 @@ import com.tehjul.gestiondestock.exception.EntityNotFoundException;
 import com.tehjul.gestiondestock.exception.ErrorCodes;
 import com.tehjul.gestiondestock.exception.InvalidEntityException;
 
+import com.tehjul.gestiondestock.exception.InvalidOperationException;
+import com.tehjul.gestiondestock.model.CommandeClient;
 import com.tehjul.gestiondestock.repository.ClientRepository;
+import com.tehjul.gestiondestock.repository.CommandeClientRepository;
 import com.tehjul.gestiondestock.services.ClientService;
 import com.tehjul.gestiondestock.validator.ClientValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,10 +24,12 @@ import java.util.stream.Collectors;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final CommandeClientRepository commandeClientRepository;
 
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository, CommandeClientRepository commandeClientRepository) {
         this.clientRepository = clientRepository;
+        this.commandeClientRepository = commandeClientRepository;
     }
 
     @Override
@@ -67,6 +73,10 @@ public class ClientServiceImpl implements ClientService {
         if (id == null) {
             log.error("Client ID is null");
             return;
+        }
+        Optional<List<CommandeClient>> commandeClients = commandeClientRepository.findAllByClientId(id);
+        if (!commandeClients.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un client qui a déjà des commandes client", ErrorCodes.CLIENT_ALREADY_IN_USE);
         }
         clientRepository.deleteById(id);
     }

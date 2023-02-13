@@ -7,11 +7,12 @@ import com.tehjul.gestiondestock.dto.LigneVenteDto;
 import com.tehjul.gestiondestock.exception.EntityNotFoundException;
 import com.tehjul.gestiondestock.exception.ErrorCodes;
 import com.tehjul.gestiondestock.exception.InvalidEntityException;
+import com.tehjul.gestiondestock.exception.InvalidOperationException;
 import com.tehjul.gestiondestock.model.Article;
-import com.tehjul.gestiondestock.repository.ArticleRepository;
-import com.tehjul.gestiondestock.repository.LigneCommandeClientRepository;
-import com.tehjul.gestiondestock.repository.LigneCommandeFournisseurRepository;
-import com.tehjul.gestiondestock.repository.LigneVenteRepository;
+import com.tehjul.gestiondestock.model.LigneCommandeClient;
+import com.tehjul.gestiondestock.model.LigneCommandeFournisseur;
+import com.tehjul.gestiondestock.model.LigneVente;
+import com.tehjul.gestiondestock.repository.*;
 import com.tehjul.gestiondestock.services.ArticleService;
 import com.tehjul.gestiondestock.validator.ArticleValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {
+    private final CommandeClientRepository commandeClientRepository;
 
     private ArticleRepository articleRepository;
     private LigneVenteRepository ligneVenteRepository;
@@ -33,11 +35,13 @@ public class ArticleServiceImpl implements ArticleService {
     private LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository;
 
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository, LigneVenteRepository ligneVenteRepository, LigneCommandeClientRepository ligneCommandeClientRepository, LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, LigneVenteRepository ligneVenteRepository, LigneCommandeClientRepository ligneCommandeClientRepository, LigneCommandeFournisseurRepository ligneCommandeFournisseurRepository,
+                              CommandeClientRepository commandeClientRepository) {
         this.articleRepository = articleRepository;
         this.ligneVenteRepository = ligneVenteRepository;
         this.ligneCommandeClientRepository = ligneCommandeClientRepository;
         this.ligneCommandeFournisseurRepository = ligneCommandeFournisseurRepository;
+        this.commandeClientRepository = commandeClientRepository;
     }
 
     @Override
@@ -126,6 +130,18 @@ public class ArticleServiceImpl implements ArticleService {
         if (id == null) {
             log.error("Article ID is null");
             return;
+        }
+        List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByArticleId(id);
+        if (!ligneCommandeClients.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article déjà utilisé dans des commandes client", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+        List<LigneCommandeFournisseur> ligneCommandeFournisseurs = ligneCommandeFournisseurRepository.findAllByArticleId(id);
+        if (!ligneCommandeFournisseurs.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article déjà utilisé dans des commandes fournisseur", ErrorCodes.ARTICLE_ALREADY_IN_USE);
+        }
+        List<LigneVente> ligneVentes = ligneVenteRepository.findAllByArticleId(id);
+        if (!ligneVentes.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un article déjà utilisé dans des ventes", ErrorCodes.ARTICLE_ALREADY_IN_USE);
         }
         articleRepository.deleteById(id);
     }
