@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.services;
 
+import com.tehjul.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.tehjul.gestiondestock.dto.UtilisateurDto;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface UtilisateurService {
     void delete(Integer id);
 
     UtilisateurDto findByEmail(String email);
+
+    UtilisateurDto changerMotDePasse(ChangerMotDePasseUtilisateurDto dto);
 
 }
