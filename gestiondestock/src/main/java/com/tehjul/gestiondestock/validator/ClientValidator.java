@@ -29,7 +29,7 @@ public class ClientValidator {
             errors.add("Veuillez renseigner le mail du client");
         if (!StringUtils.hasLength(clientDto.getNumTel()))
             errors.add("Veuillez renseigner le numéro de téléphone du client");
-
+        errors.addAll(AdresseValidator.validate(clientDto.getAdresse()));
         return errors;
     }
 }
