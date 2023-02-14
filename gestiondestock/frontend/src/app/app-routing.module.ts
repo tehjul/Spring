@@ -9,6 +9,7 @@ import {NouvelArticleComponent} from "./pages/articles/nouvel-article/nouvel-art
 import {PageMvtstkComponent} from "./pages/mvtstk/page-mvtstk/page-mvtstk.component";
 import {PageClientComponent} from "./pages/client/page-client/page-client.component";
 import {PageFournisseurComponent} from "./pages/fournisseur/page-fournisseur/page-fournisseur.component";
+import {NouveauCltFrsComponent} from "./composants/nouveau-clt-frs/nouveau-clt-frs.component";
 
 const routes: Routes = [
   {
@@ -44,8 +45,16 @@ const routes: Routes = [
         component: PageClientComponent
       },
       {
+        path: 'nouveauclient',
+        component: NouveauCltFrsComponent
+      },
+      {
         path: 'fournisseurs',
         component: PageFournisseurComponent
+      },
+      {
+        path: 'nouveaufournisseur',
+        component: NouveauCltFrsComponent
       }
     ]
   }
