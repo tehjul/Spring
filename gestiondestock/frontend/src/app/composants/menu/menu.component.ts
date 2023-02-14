@@ -60,7 +60,7 @@ export class MenuComponent {
           id: '31',
           titre: 'Clients',
           icon: 'fa-solid fa-users',
-          url: ''
+          url: 'clients'
         },
         {
           id: '32',
@@ -80,7 +80,7 @@ export class MenuComponent {
           id: '41',
           titre: 'Fournisseurs',
           icon: 'fa-solid fa-users',
-          url: ''
+          url: 'fournisseurs'
         },
         {
           id: '42',
