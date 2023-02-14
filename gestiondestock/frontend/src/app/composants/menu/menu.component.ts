@@ -40,7 +40,7 @@ export class MenuComponent {
           id: '21',
           titre: 'Articles',
           icon: 'fa-solid fa-box',
-          url: ''
+          url: 'articles'
         },
         {
           id: '22',

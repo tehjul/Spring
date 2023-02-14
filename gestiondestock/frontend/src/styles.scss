@@ -2,12 +2,28 @@
 body {
   background-color: #eff2f5 !important;
 }
+
 .background-grey {
   background-color: #eff2f5 !important;
 }
-.border-none{
+
+.border-none {
   border: none !important;
 }
-.min-height-80{
+
+.min-height-80 {
   min-height: 80px;
+}
+
+.border-right {
+  border-right: 2px solid #9ca16a !important;
+}
+
+.custom-border {
+  border: solid #9ca1a6;
+  border-radius: 5px;
+}
+
+.blue-color {
+  color: #037bfe;
 }
