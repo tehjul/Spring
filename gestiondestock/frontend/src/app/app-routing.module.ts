@@ -6,6 +6,7 @@ import {PageDashboardComponent} from "./pages/page-dashboard/page-dashboard.comp
 import {PageStatistiquesComponent} from "./pages/page-statistiques/page-statistiques.component";
 import {PageArticleComponent} from "./pages/articles/page-article/page-article.component";
 import {NouvelArticleComponent} from "./pages/articles/nouvel-article/nouvel-article.component";
+import {PageMvtstkComponent} from "./pages/mvtstk/page-mvtstk/page-mvtstk.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'nouvelarticle',
         component: NouvelArticleComponent
+      },
+      {
+        path: 'mvtstk',
+        component: PageMvtstkComponent
       }
     ]
   }
