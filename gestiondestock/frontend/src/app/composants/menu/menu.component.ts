@@ -106,7 +106,7 @@ export class MenuComponent {
           id: '52',
           titre: 'Utilisateurs',
           icon: 'fa-solid fa-user-cog',
-          url: ''
+          url: 'utilisateurs'
         },
       ]
     }

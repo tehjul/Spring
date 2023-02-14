@@ -1,0 +1,26 @@
+<div class="col">
+
+  <div class="row m-3">
+    <div class="col-md-8 px-0">
+      <h1>Liste des utilisateurs</h1>
+    </div>
+    <div class="col-md-4 text-end">
+      <app-boutons-action
+        (clickEvent)="nouvelUtilisateur()"
+      ></app-boutons-action>
+    </div>
+  </div>
+
+  <div class="col m-3">
+    <app-detail-utilisateur></app-detail-utilisateur>
+    <app-detail-utilisateur></app-detail-utilisateur>
+    <app-detail-utilisateur></app-detail-utilisateur>
+    <app-detail-utilisateur></app-detail-utilisateur>
+    <app-detail-utilisateur></app-detail-utilisateur>
+  </div>
+
+  <div class="row text-center mb-3">
+    <app-pagination></app-pagination>
+  </div>
+
+</div>
