@@ -11,7 +11,7 @@ export class PageCategorieComponent {
   constructor(private router: Router) {
   }
 
-  nouvelCategorie(): void {
+  nouvelleCategorie(): void {
     this.router.navigate(['nouvellecategorie']);
   }
 }
