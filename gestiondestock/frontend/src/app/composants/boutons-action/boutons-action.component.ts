@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-boutons-action',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class BoutonsActionComponent {
 
+  @Output()
+  clickEvent = new EventEmitter();
+
+  boutonNouveauClick(): void {
+    this.clickEvent.emit();
+  }
 }

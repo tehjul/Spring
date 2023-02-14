@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-page-fournisseur',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class PageFournisseurComponent {
 
+  constructor(private router: Router) {
+  }
+
+  nouveauFournisseur(): void {
+    this.router.navigate(['nouveauclient']);
+  }
 }

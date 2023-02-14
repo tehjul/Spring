@@ -5,7 +5,9 @@
       <h1>Liste des articles</h1>
     </div>
     <div class="col-md-4 text-end">
-      <app-boutons-action></app-boutons-action>
+      <app-boutons-action
+        (clickEvent)="nouvelArticle()"
+      ></app-boutons-action>
     </div>
   </div>
 

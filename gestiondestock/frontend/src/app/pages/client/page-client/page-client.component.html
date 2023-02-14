@@ -5,7 +5,9 @@
       <h1>Liste des clients</h1>
     </div>
     <div class="col-md-4 text-end">
-      <app-boutons-action></app-boutons-action>
+      <app-boutons-action
+        (clickEvent)="nouveauClient()"
+      ></app-boutons-action>
     </div>
   </div>
 
