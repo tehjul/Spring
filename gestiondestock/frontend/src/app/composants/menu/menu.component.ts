@@ -100,7 +100,7 @@ export class MenuComponent {
           id: '51',
           titre: 'Catégories',
           icon: 'fa-solid fa-tools',
-          url: ''
+          url: 'categories'
         },
         {
           id: '52',
