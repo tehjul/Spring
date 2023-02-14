@@ -66,7 +66,7 @@ export class MenuComponent {
           id: '32',
           titre: 'Commandes clients',
           icon: 'fa-solid fa-shopping-basket',
-          url: ''
+          url: 'commandeclient'
         },
       ]
     },
@@ -86,7 +86,7 @@ export class MenuComponent {
           id: '42',
           titre: 'Commandes fournisseurs',
           icon: 'fa-solid fa-truck',
-          url: ''
+          url: 'commandefournisseur'
         },
       ]
     },
