@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.*;
 
-@Api(COMMANDE_FOURNISSEUR_ENDPOINT)
+@Api("commandesfournisseurs")
 public interface CommandeFournisseurApi {
 
     @PostMapping(CREATE_COMMANDE_FOURNISSEUR_ENDPOINT)

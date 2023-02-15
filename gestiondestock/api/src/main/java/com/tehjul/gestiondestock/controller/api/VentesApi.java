@@ -8,7 +8,7 @@ import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.VENTES_ENDPOINT;
 
-@Api(VENTES_ENDPOINT)
+@Api("ventes")
 public interface VentesApi {
 
     @PostMapping(VENTES_ENDPOINT + "/create")

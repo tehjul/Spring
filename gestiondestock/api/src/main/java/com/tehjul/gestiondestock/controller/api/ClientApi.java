@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.CLIENT_ENDPOINT;
 
-@Api(CLIENT_ENDPOINT)
+@Api("clients")
 public interface ClientApi {
 
     @PostMapping(value = CLIENT_ENDPOINT + "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

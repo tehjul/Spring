@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.COMMANDE_CLIENT_ENDPOINT;
 
-@Api(COMMANDE_CLIENT_ENDPOINT)
+@Api("commandesclients")
 public interface CommandeClientApi {
 
     @PostMapping(COMMANDE_CLIENT_ENDPOINT + "/create")

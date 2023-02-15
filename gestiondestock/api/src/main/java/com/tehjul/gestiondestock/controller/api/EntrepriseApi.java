@@ -9,7 +9,7 @@ import java.util.List;
 import static com.tehjul.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tehjul.gestiondestock.utils.Constants.ENTREPRISE_ENDPOINT;
 
-@Api(ENTREPRISE_ENDPOINT)
+@Api("entreprises")
 public interface EntrepriseApi {
 
     @PostMapping(ENTREPRISE_ENDPOINT + "/create")

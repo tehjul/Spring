@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.tehjul.gestiondestock.utils.Constants.APP_ROOT;
 
-@Api(APP_ROOT + "/mvtstk")
+@Api("/mvtstk")
 public interface MvtStkApi {
 
     @GetMapping(APP_ROOT + "/mvtstk/stockreel/{idArticle}")

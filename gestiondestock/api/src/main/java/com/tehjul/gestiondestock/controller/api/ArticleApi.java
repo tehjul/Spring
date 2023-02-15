@@ -16,7 +16,7 @@ import java.util.List;
 import static com.tehjul.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tehjul.gestiondestock.utils.Constants.ARTICLE_ENDPOINT;
 
-@Api(ARTICLE_ENDPOINT)
+@Api("articles")
 public interface ArticleApi {
 
     @PostMapping(value = ARTICLE_ENDPOINT + "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

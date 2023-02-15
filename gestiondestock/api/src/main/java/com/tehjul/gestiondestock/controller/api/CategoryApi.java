@@ -13,7 +13,7 @@ import java.util.List;
 import static com.tehjul.gestiondestock.utils.Constants.APP_ROOT;
 import static com.tehjul.gestiondestock.utils.Constants.CATEGORY_ENDPOINT;
 
-@Api(CATEGORY_ENDPOINT)
+@Api("categories")
 public interface CategoryApi {
 
     @PostMapping(value = CATEGORY_ENDPOINT + "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
