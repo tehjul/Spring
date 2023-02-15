@@ -112,10 +112,17 @@ export class MenuComponent {
     }
   ]
 
+  private lastSelectedMenu: Menu | undefined;
+
   constructor(private router: Router) {
   }
 
-  navigate(url?: string): void {
-    this.router.navigate([url]);
+  navigate(menu: Menu): void {
+    if (this.lastSelectedMenu) {
+      this.lastSelectedMenu.active = false;
+    }
+    menu.active = true;
+    this.router.navigate([menu.url]);
+    this.lastSelectedMenu = menu;
   }
 }

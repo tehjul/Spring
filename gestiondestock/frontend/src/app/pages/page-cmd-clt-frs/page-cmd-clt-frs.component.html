@@ -2,11 +2,12 @@
 
   <div class="row m-3">
     <div class="col-md-8 px-0">
-      <h1>Commandes clients / fournisseurs</h1>
+      <h1>Commandes {{origin}}</h1>
     </div>
     <div class="col-md-4 text-end">
       <app-boutons-action
         (clickEvent)="nouvelleCommande()"
+        [isImporterVisible]="false"
       ></app-boutons-action>
     </div>
   </div>

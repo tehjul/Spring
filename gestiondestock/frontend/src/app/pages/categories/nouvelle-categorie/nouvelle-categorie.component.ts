@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nouvelle-categorie',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class NouvelleCategorieComponent {
 
+
+  constructor(
+    private router: Router
+  ) {
+  }
+
+  cancel(): void {
+    this.router.navigate(['categories']);
+  }
 }

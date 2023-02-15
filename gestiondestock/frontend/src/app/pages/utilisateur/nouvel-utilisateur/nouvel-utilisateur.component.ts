@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nouvel-utilisateur',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class NouvelUtilisateurComponent {
 
+
+  constructor(
+    private router: Router
+  ) {
+  }
+
+  cancel(): void {
+    this.router.navigate(['utilisateurs']);
+  }
 }

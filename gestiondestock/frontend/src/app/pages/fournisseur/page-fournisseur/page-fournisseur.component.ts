@@ -12,6 +12,6 @@ export class PageFournisseurComponent {
   }
 
   nouveauFournisseur(): void {
-    this.router.navigate(['nouveauclient']);
+    this.router.navigate(['nouveaufournisseur']);
   }
 }
