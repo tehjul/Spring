@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.controller;
 
+import com.tehjul.gestiondestock.controller.api.AuthenticationApi;
 import com.tehjul.gestiondestock.dto.auth.AuthenticationRequest;
 import com.tehjul.gestiondestock.dto.auth.AuthenticationResponse;
 import com.tehjul.gestiondestock.model.auth.ExtendedUser;
@@ -19,7 +20,7 @@ import static com.tehjul.gestiondestock.utils.Constants.AUTHENTICATION_ENDPOINT;
 
 @RestController
 @RequestMapping(AUTHENTICATION_ENDPOINT)
-public class AuthenticationController {
+public class AuthenticationController implements AuthenticationApi {
 
     @Autowired
     private AuthenticationManager authenticationManager;
