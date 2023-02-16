@@ -108,7 +108,7 @@
 							<locations>
 								<location>com.tehjul.gestiondestock.controller.api</location>
 							</locations>
-							<basePath>http://localhost:8881/</basePath>
+							<basePath>http://localhost:8881</basePath>
 							<info>
 								<title>Swagger Api Documentation for Gestion de stock application</title>
 								<version>${project.version}</version>
