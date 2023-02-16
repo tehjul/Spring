@@ -9,9 +9,11 @@
       "email" : "tehjul.dev@gmail.com"
     }
   },
-  "basePath" : "http://localhost:8881/",
+  "basePath" : "http://localhost:8881",
   "tags" : [ {
     "name" : "articles"
+  }, {
+    "name" : "authentication"
   }, {
     "name" : "categories"
   }, {
@@ -253,6 +255,28 @@
           },
           "404" : {
             "description" : "Aucun article n'existe dans la BDD avec l'ID fourni"
+          }
+        }
+      }
+    },
+    "/gestiondestock/v1/auth/authenticate" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "operationId" : "authenticate",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AuthenticationRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AuthenticationResponse"
+            }
           }
         }
       }
@@ -1572,6 +1596,25 @@
         "idEntreprise" : {
           "type" : "integer",
           "format" : "int32"
+        }
+      }
+    },
+    "AuthenticationRequest" : {
+      "type" : "object",
+      "properties" : {
+        "login" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AuthenticationResponse" : {
+      "type" : "object",
+      "properties" : {
+        "accessToken" : {
+          "type" : "string"
         }
       }
     },
