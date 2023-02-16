@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
 import { ArticlesService } from './services/articles.service';
+import { AuthenticationService } from './services/authentication.service';
 import { CategoriesService } from './services/categories.service';
 import { ClientsService } from './services/clients.service';
 import { CommandesclientsService } from './services/commandesclients.service';
@@ -29,6 +30,7 @@ import { VentesService } from './services/ventes.service';
   providers: [
     ApiConfiguration,
     ArticlesService,
+    AuthenticationService,
     CategoriesService,
     ClientsService,
     CommandesclientsService,

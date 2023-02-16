@@ -1,5 +1,7 @@
 export { AdresseDto } from './models/adresse-dto';
 export { ArticleDto } from './models/article-dto';
+export { AuthenticationRequest } from './models/authentication-request';
+export { AuthenticationResponse } from './models/authentication-response';
 export { CategoryDto } from './models/category-dto';
 export { ClientDto } from './models/client-dto';
 export { CommandeClientDto } from './models/commande-client-dto';

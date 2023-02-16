@@ -1,4 +1,5 @@
 export { ArticlesService } from './services/articles.service';
+export { AuthenticationService } from './services/authentication.service';
 export { CategoriesService } from './services/categories.service';
 export { ClientsService } from './services/clients.service';
 export { CommandesclientsService } from './services/commandesclients.service';
