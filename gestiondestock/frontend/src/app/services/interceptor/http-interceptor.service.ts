@@ -14,9 +14,9 @@ export class HttpInterceptorService implements HttpInterceptor {
   // @ts-ignore
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authenticationResponse: AuthenticationResponse = {};
-    if (localStorage.getItem('connectedUser')) {
+    if (localStorage.getItem('accessToken')) {
       authenticationResponse = JSON.parse(
-        localStorage.getItem('connectedUser') as string
+        localStorage.getItem('accessToken') as string
       );
       const authReq = req.clone({
         headers: new HttpHeaders({
@@ -25,5 +25,6 @@ export class HttpInterceptorService implements HttpInterceptor {
       });
       return next.handle(authReq);
     }
+    return next.handle(req);
   }
 }

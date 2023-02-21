@@ -22,11 +22,19 @@ export class PageLoginComponent {
   login(): void {
     console.log(this.authenticationRequest);
     this.userService.login(this.authenticationRequest).subscribe((data) => {
-      this.userService.setConnectedUser(data);
+      this.userService.setAccessToken(data);
+      this.getUserByEmail();
       this.router.navigate(['']);
     }, error => {
       this.errorMessage = 'Login et/ou mot de passe incorrect';
     });
+  }
+
+  getUserByEmail(): void {
+    this.userService.getUserByEmail(this.authenticationRequest.login)
+      .subscribe(user => {
+        this.userService.setConnectedUser(user);
+      });
   }
 
 }
