@@ -1,5 +1,6 @@
 package com.tehjul.gestiondestock.controller.api;
 
+import com.tehjul.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.tehjul.gestiondestock.dto.UtilisateurDto;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,9 @@ public interface UtilisateurApi {
 
     @PostMapping(UTILISATEUR_ENDPOINT + "/create")
     UtilisateurDto save(@RequestBody UtilisateurDto dto);
+
+    @PostMapping(UTILISATEUR_ENDPOINT + "/update/password")
+    UtilisateurDto changerMotDePasse(@RequestBody ChangerMotDePasseUtilisateurDto dto);
 
     @GetMapping(UTILISATEUR_ENDPOINT + "/{idUtilisateur}")
     UtilisateurDto findById(@PathVariable("idUtilisateur") Integer id);

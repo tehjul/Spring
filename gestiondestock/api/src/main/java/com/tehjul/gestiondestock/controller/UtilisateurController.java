@@ -1,6 +1,7 @@
 package com.tehjul.gestiondestock.controller;
 
 import com.tehjul.gestiondestock.controller.api.UtilisateurApi;
+import com.tehjul.gestiondestock.dto.ChangerMotDePasseUtilisateurDto;
 import com.tehjul.gestiondestock.dto.UtilisateurDto;
 import com.tehjul.gestiondestock.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class UtilisateurController implements UtilisateurApi {
     @Override
     public UtilisateurDto save(UtilisateurDto dto) {
         return utilisateurService.save(dto);
+    }
+
+    @Override
+    public UtilisateurDto changerMotDePasse(ChangerMotDePasseUtilisateurDto dto) {
+        return utilisateurService.changerMotDePasse(dto);
     }
 
     @Override
