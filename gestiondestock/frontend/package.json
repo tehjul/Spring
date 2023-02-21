@@ -9,10 +9,10 @@
     "test": "ng test",
     "start:local": "npm run gs-api && ng serve -- --proxyConfig=proxy.conf.json",
     "gs-api": "npm run gs-api:create-dist && npm run gs-api:download && npm run gs-api:extract && npm run gs-api:swagger-gen",
-    "gs-api:create-dist": "mkdirp tools/swagger/dist && mkdirp tools/swagger/src",
-    "gs-api:download": "copy ..\\api\\target\\gestiondestock-0.0.1-SNAPSHOT.jar .\\tools\\swagger\\dist && copy ..\\api\\target\\swagger.json .\\tools\\swagger\\src",
-    "gs-api:extract": "node .\\tools\\swagger\\src\\swagger.json 0.0.1-SNAPSHOT",
-    "gs-api:swagger-gen": ".\\node_modules\\.bin\\ng-swagger-gen -i .\\tools\\swagger\\src\\swagger.json -o src\\gs-api\\src"
+    "gs-api:create-dist": "mkdir -p tools/swagger/dist && mkdir -p tools/swagger/src",
+    "gs-api:download": "cp ../api/target/gestiondestock-0.0.1-SNAPSHOT.jar ./tools/swagger/dist && cp ../api/target/swagger.json ./tools/swagger/src",
+    "gs-api:extract": "node ./tools/swagger/src/swagger.json 0.0.1-SNAPSHOT",
+    "gs-api:swagger-gen": "./node_modules/.bin/ng-swagger-gen -i ./tools/swagger/src/swagger.json -o src/gs-api/src"
   },
   "private": true,
   "dependencies": {
