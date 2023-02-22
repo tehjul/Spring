@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ArticleDto} from "../../../gs-api/src/models/article-dto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-detail-article',
@@ -11,4 +12,13 @@ export class DetailArticleComponent {
   @Input()
   articleDto: ArticleDto = {};
 
+
+  constructor(
+    private router: Router
+  ) {
+  }
+
+  modifierArticle() {
+    this.router.navigate(['nouvelarticle', this.articleDto.id])
+  }
 }

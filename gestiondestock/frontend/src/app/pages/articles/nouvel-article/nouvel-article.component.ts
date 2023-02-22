@@ -30,6 +30,15 @@ export class NouvelArticleComponent implements OnInit {
       .subscribe(categories => {
         this.listeCategorie = categories;
       })
+
+    const id = this.activatedRoute.snapshot.params['idArticle'];
+    if (id) {
+      this.articleService.findArticleById(id)
+        .subscribe(article => {
+          this.articleDto = article;
+          this.categorieDto = this.articleDto.category ? this.articleDto.category : {};
+        });
+    }
   }
 
 

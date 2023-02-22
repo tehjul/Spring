@@ -50,6 +50,11 @@ const routes: Routes = [
         canActivate: [ApplicationGuardService],
       },
       {
+        path: 'nouvelarticle/:idArticle',
+        component: NouvelArticleComponent,
+        canActivate: [ApplicationGuardService],
+      },
+      {
         path: 'mvtstk',
         component: PageMvtstkComponent,
         canActivate: [ApplicationGuardService],
