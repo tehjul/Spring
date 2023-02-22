@@ -29,11 +29,11 @@
       <div class="row mb-3">
         <div class="col">
           <input type="text" class="form-control" name="prixunitaireht" placeholder="Prix unitaire HT"
-                 aria-label="Prix unitaire HT" [(ngModel)]="articleDto.prixUnitaireHt">
+                 aria-label="Prix unitaire HT" (input)="calculerTTC()" [(ngModel)]="articleDto.prixUnitaireHt">
         </div>
         <div class="col">
           <input type="text" class="form-control" name="tauxtva" placeholder="Taux TVA" aria-label="Taux TVA"
-                 [(ngModel)]="articleDto.tauxTva">
+                 (input)="calculerTTC()" [(ngModel)]="articleDto.tauxTva">
         </div>
       </div>
       <div class="row mb-3">

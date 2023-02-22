@@ -59,4 +59,10 @@ export class NouvelArticleComponent implements OnInit {
   navigateToArticle(): void {
     this.router.navigate(['articles']);
   }
+
+  calculerTTC(): void {
+    if (this.articleDto.prixUnitaireHt && this.articleDto.tauxTva) {
+      this.articleDto.prixUnitaireTtc = this.articleDto.prixUnitaireHt * (1 + this.articleDto.tauxTva / 100)
+    }
+  }
 }
