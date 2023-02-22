@@ -16,8 +16,24 @@
       <div class="col-md-3 border-right">
         {{cat.code}}
       </div>
-      <div class="col-md-3">
+      <div class="col-md-6 border-right">
         {{cat.designation}}
+      </div>
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-4">
+            <button type="button" class="btn btn-link row" (click)="modifierCategory(cat.id!)">
+              <i class="fa-solid fa-pencil"></i>
+              Modifier
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-link row">
+              <i class="fa-solid fa-trash"></i>
+              Supprimer
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

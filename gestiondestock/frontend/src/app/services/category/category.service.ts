@@ -24,4 +24,7 @@ export class CategoryService {
     return this.categoriesService.findAll();
   }
 
+  findById(idCategory: number): Observable<CategoryDto> {
+    return this.categoriesService.findById(idCategory);
+  }
 }

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {CategoryDto} from "../../../../gs-api/src/models/category-dto";
 import {CategoryService} from "../../../services/category/category.service";
 
@@ -8,13 +8,14 @@ import {CategoryService} from "../../../services/category/category.service";
   templateUrl: './nouvelle-categorie.component.html',
   styleUrls: ['./nouvelle-categorie.component.scss']
 })
-export class NouvelleCategorieComponent {
+export class NouvelleCategorieComponent implements OnInit {
 
   categoryDto: CategoryDto = {};
   errorMsg: Array<string> = [];
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private categoryService: CategoryService
   ) {
   }
@@ -34,5 +35,15 @@ export class NouvelleCategorieComponent {
 
   navigateToCategories(): void {
     this.router.navigate(['categories']);
+  }
+
+  ngOnInit(): void {
+    const idCategory = this.activatedRoute.snapshot.params['idCategory'];
+    if (idCategory) {
+      this.categoryService.findById(idCategory)
+        .subscribe(cat => {
+          this.categoryDto = cat;
+        });
+    }
   }
 }

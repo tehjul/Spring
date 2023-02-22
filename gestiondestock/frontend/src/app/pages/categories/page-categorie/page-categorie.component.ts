@@ -28,4 +28,8 @@ export class PageCategorieComponent implements OnInit {
         this.listCategories = res;
       });
   }
+
+  modifierCategory(id: number): void {
+    this.router.navigate(['nouvellecategorie', id]);
+  }
 }
