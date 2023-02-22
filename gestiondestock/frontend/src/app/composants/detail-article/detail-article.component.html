@@ -8,19 +8,19 @@
     <div class="col">
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-        <div class="col-md-11">Code article</div>
+        <div class="col-md-11">{{articleDto.codeArticle}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-        <div class="col-md-11">Designation</div>
+        <div class="col-md-11">{{articleDto.designation}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-dollar-sign blue-color"></i></div>
-        <div class="col-md-11">Prix HT</div>
+        <div class="col-md-11">{{articleDto.prixUnitaireHt}} €</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-dollar-sign blue-color"></i></div>
-        <div class="col-md-11">Prix TTC</div>
+        <div class="col-md-11">{{articleDto.prixUnitaireTtc}} €</div>
       </div>
     </div>
   </div>
@@ -32,8 +32,8 @@
       </div>
       <div class="col-md-10">
         <div class="row">
-          <div class="col-md-12">Code catégorie</div>
-          <div class="col-md-12">Description catégorie</div>
+          <div class="col-md-12">{{articleDto.category?.code}}</div>
+          <div class="col-md-12">{{articleDto.category?.designation}}</div>
         </div>
       </div>
     </div>

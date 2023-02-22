@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ArticleDto} from "../../../gs-api/src/models/article-dto";
 
 @Component({
   selector: 'app-detail-article',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./detail-article.component.scss']
 })
 export class DetailArticleComponent {
+
+  @Input()
+  articleDto: ArticleDto = {};
 
 }
