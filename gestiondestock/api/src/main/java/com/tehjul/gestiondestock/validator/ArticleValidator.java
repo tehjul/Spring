@@ -17,7 +17,7 @@ public class ArticleValidator {
             errors.add("Veuillez renseigner le prix unitaire de l'article");
             errors.add("Veuillez renseigner le taux de tva de l'article");
             errors.add("Veuillez renseigner le prix ttc de l'article");
-            errors.add("Veuillez renseigner une catégorie de l'article");
+            errors.add("Veuillez selectionner une catégorie");
             return errors;
         }
 
@@ -31,8 +31,8 @@ public class ArticleValidator {
             errors.add("Veuillez renseigner le taux de tva de l'article");
         if (articleDto.getPrixUnitaireTtc() == null)
             errors.add("Veuillez renseigner le prix ttc de l'article");
-        if (articleDto.getCategory() == null)
-            errors.add("Veuillez renseigner une catégorie de l'article");
+        if (articleDto.getCategory() == null || articleDto.getCategory().getId() == null)
+            errors.add("Veuillez selectionner une catégorie");
 
 
         return errors;
