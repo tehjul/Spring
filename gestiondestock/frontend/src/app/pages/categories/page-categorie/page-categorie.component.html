@@ -12,17 +12,17 @@
   </div>
 
   <div class="col m-3">
-    <div class="row custom-border mb-3 p-3">
+    <div class="row custom-border mb-3 p-3" *ngFor="let cat of listCategories">
       <div class="col-md-3 border-right">
-        Code catégorie
+        {{cat.code}}
       </div>
       <div class="col-md-3">
-        Description catégorie
+        {{cat.designation}}
       </div>
     </div>
   </div>
 
-  <div class="row text-center mb-3">
+  <div class="row text-center mb-3" *ngIf="listCategories.length > 0">
     <app-pagination></app-pagination>
   </div>
 
