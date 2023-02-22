@@ -43,6 +43,7 @@ export class PageCategorieComponent implements OnInit {
     if (this.selectedCatIdToDelete !== -1) {
       this.categoryService.delete(this.selectedCatIdToDelete)
         .subscribe(res => {
+          this.errorMsg = '';
           this.findAllCategories();
         }, error => {
           this.errorMsg = error.error.message;
