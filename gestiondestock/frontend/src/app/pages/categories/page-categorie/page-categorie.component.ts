@@ -11,6 +11,8 @@ import {CategoryService} from "../../../services/category/category.service";
 export class PageCategorieComponent implements OnInit {
 
   listCategories: Array<CategoryDto> = [];
+  selectedCatIdToDelete?: number = -1;
+  errorMsg = '';
 
   constructor(
     private router: Router,
@@ -23,13 +25,36 @@ export class PageCategorieComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.findAllCategories();
+  }
+
+  findAllCategories(): void {
     this.categoryService.findAllCategories()
       .subscribe(res => {
         this.listCategories = res;
       });
   }
 
-  modifierCategory(id: number): void {
+  modifierCategory(id?: number): void {
     this.router.navigate(['nouvellecategorie', id]);
+  }
+
+  confirmerEtSupprimerCat(): void {
+    if (this.selectedCatIdToDelete !== -1) {
+      this.categoryService.delete(this.selectedCatIdToDelete)
+        .subscribe(res => {
+          this.findAllCategories();
+        }, error => {
+          this.errorMsg = error.error.message;
+        });
+    }
+  }
+
+  annulerSuppressionCat(): void {
+    this.selectedCatIdToDelete = -1;
+  }
+
+  selectCatPourSupprimer(id?: number): void {
+    this.selectedCatIdToDelete = id;
   }
 }

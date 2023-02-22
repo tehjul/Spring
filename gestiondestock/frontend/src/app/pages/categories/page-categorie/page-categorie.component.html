@@ -12,7 +12,10 @@
   </div>
 
   <div class="col m-3">
-    <div class="row custom-border mb-3 p-3" *ngFor="let cat of listCategories">
+    <div class="row col-md-12 alert alert-danger" *ngIf="errorMsg">
+      {{errorMsg}}
+    </div>
+    <div class="row col-md-12 custom-border mb-3 p-3" *ngFor="let cat of listCategories">
       <div class="col-md-3 border-right">
         {{cat.code}}
       </div>
@@ -22,13 +25,14 @@
       <div class="col-md-3">
         <div class="row">
           <div class="col-md-4">
-            <button type="button" class="btn btn-link row" (click)="modifierCategory(cat.id!)">
+            <button type="button" class="btn btn-link row" (click)="modifierCategory(cat.id)">
               <i class="fa-solid fa-pencil"></i>
               Modifier
             </button>
           </div>
           <div class="col-md-4">
-            <button type="button" class="btn btn-link row">
+            <button type="button" class="btn btn-link row" data-bs-toggle="modal" data-bs-target="#modalDeleteCat"
+                    (click)="selectCatPourSupprimer(cat.id)">
               <i class="fa-solid fa-trash"></i>
               Supprimer
             </button>
@@ -43,4 +47,31 @@
   </div>
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDeleteCat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Etes-vous sur de vouloir supprimer cette catégorie ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="annulerSuppressionCat()">
+          <i class="fa-solid fa-ban"></i>
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="confirmerEtSupprimerCat()">
+          <i class="fa-solid fa-trash"></i>
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
