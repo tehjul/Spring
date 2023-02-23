@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ClientDto} from "../../../gs-api/src/models/client-dto";
 
 @Component({
   selector: 'app-detail-clt-frs',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./detail-clt-frs.component.scss']
 })
 export class DetailCltFrsComponent {
+
+  @Input()
+  clientFournisseur: any = {};
+
 
 }

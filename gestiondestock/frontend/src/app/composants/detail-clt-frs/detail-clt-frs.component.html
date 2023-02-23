@@ -8,15 +8,15 @@
     <div class="col">
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-        <div class="col-md-11">Nom</div>
+        <div class="col-md-11">{{clientFournisseur.nom}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-        <div class="col-md-11">Prénom</div>
+        <div class="col-md-11">{{clientFournisseur.prenom}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-phone blue-color"></i></div>
-        <div class="col-md-11">0011 22 33 44 55</div>
+        <div class="col-md-11">{{clientFournisseur.numTel}}</div>
       </div>
     </div>
   </div>
@@ -25,15 +25,15 @@
     <div class="col">
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-home blue-color"></i></div>
-        <div class="col-md-11">Adresse 1 Adresse 2</div>
+        <div class="col-md-11">{{clientFournisseur.adresse?.adresse1 + ' ' + clientFournisseur.adresse?.adresse2}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-map-marked-alt blue-color"></i></div>
-        <div class="col-md-11">Code postal Ville</div>
+        <div class="col-md-11">{{clientFournisseur.adresse?.codePostal + ' ' + clientFournisseur.adresse?.ville}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-globe-europe blue-color"></i></div>
-        <div class="col-md-11">Pays</div>
+        <div class="col-md-11">{{clientFournisseur.adresse?.pays}}</div>
       </div>
     </div>
   </div>
