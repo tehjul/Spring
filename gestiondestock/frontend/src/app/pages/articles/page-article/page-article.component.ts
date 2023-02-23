@@ -9,7 +9,9 @@ import {ArticleService} from "../../../services/article/article.service";
   styleUrls: ['./page-article.component.scss']
 })
 export class PageArticleComponent implements OnInit {
+
   listArticle: Array<ArticleDto> = [];
+  errorMsg = '';
 
   constructor(
     private router: Router,
@@ -22,9 +24,21 @@ export class PageArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.findListArticles();
+  }
+
+  findListArticles(): void {
     this.articleService.findAllArticles()
       .subscribe(articles => {
         this.listArticle = articles;
-      })
+      });
+  }
+
+  handleSuppression(event: any): void {
+    if (event === 'success') {
+      this.findListArticles();
+    } else {
+      this.errorMsg = event;
+    }
   }
 }
