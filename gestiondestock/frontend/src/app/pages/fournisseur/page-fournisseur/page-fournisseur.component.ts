@@ -11,6 +11,7 @@ import {FournisseurDto} from "../../../../gs-api/src/models/fournisseur-dto";
 export class PageFournisseurComponent implements OnInit {
 
   listFournisseur: Array<FournisseurDto> = [];
+  errorMsg: string = '';
 
   constructor(
     private router: Router,
@@ -31,5 +32,13 @@ export class PageFournisseurComponent implements OnInit {
       .subscribe(fournisseurs => {
         this.listFournisseur = fournisseurs;
       })
+  }
+
+  handleSuppression(event: any): void {
+    if (event === 'success') {
+      this.findAllFournisseurs()
+    } else {
+      this.errorMsg = event;
+    }
   }
 }

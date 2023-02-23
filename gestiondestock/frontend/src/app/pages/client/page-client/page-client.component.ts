@@ -11,6 +11,7 @@ import {ClientDto} from "../../../../gs-api/src/models/client-dto";
 export class PageClientComponent implements OnInit {
 
   listClient: Array<ClientDto> = [];
+  errorMsg: string = '';
 
   constructor(
     private router: Router,
@@ -31,5 +32,13 @@ export class PageClientComponent implements OnInit {
       .subscribe(clients => {
         this.listClient = clients;
       })
+  }
+
+  handleSuppression(event: any): void {
+    if (event === 'success') {
+      this.findAllClients()
+    } else {
+      this.errorMsg = event;
+    }
   }
 }

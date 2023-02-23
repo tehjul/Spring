@@ -48,7 +48,8 @@
         </button>
       </div>
       <div class="col-md-4">
-        <button type="button" class="btn btn-link row text-danger">
+        <button type="button" class="btn btn-link row text-danger" data-bs-toggle="modal"
+                [attr.data-bs-target]="'#modalDeleteCltFrs' + clientFournisseur.id">
           <i class="fa-solid fa-trash"></i>
           Supprimer
         </button>
@@ -58,6 +59,33 @@
           <i class="fa-solid fa-list"></i>
           Details
         </button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modalDeleteCltFrs{{clientFournisseur.id}}" data-bs-backdrop="static"
+       data-bs-keyboard="false"
+       tabindex="-1"
+       aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Etes-vous sur de vouloir supprimer ce {{origin}} ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fa-solid fa-ban"></i>
+            Annuler
+          </button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="confirmerEtSupprimer()">
+            <i class="fa-solid fa-trash"></i>
+            Supprimer
+          </button>
+        </div>
       </div>
     </div>
   </div>
