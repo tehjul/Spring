@@ -22,6 +22,26 @@ export class NouveauCltFrsComponent implements OnInit {
     this.activatedRoute.data.subscribe(data => {
       this.origin = data['origin'];
     });
+    this.findObject();
+  }
+
+  findObject(): void {
+    const id = this.activatedRoute.snapshot.params['id'];
+    if (id) {
+      if (this.origin === 'client') {
+        this.cltFrsService.findClientById(id)
+          .subscribe(client => {
+            this.clientFournisseur = client;
+            this.adresseDto = this.clientFournisseur.adresse;
+          })
+      } else if (this.origin === 'fournisseur') {
+        this.cltFrsService.findFournisseurById(id)
+          .subscribe(frs => {
+            this.clientFournisseur = frs;
+            this.adresseDto = this.clientFournisseur.adresse;
+          })
+      }
+    }
   }
 
   constructor(

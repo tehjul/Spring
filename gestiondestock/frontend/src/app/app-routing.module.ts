@@ -73,6 +73,14 @@ const routes: Routes = [
         }
       },
       {
+        path: 'nouveauclient/:id',
+        component: NouveauCltFrsComponent,
+        canActivate: [ApplicationGuardService],
+        data: {
+          origin: 'client'
+        }
+      },
+      {
         path: 'commandeclient',
         component: PageCmdCltFrsComponent,
         canActivate: [ApplicationGuardService],
@@ -95,6 +103,14 @@ const routes: Routes = [
       },
       {
         path: 'nouveaufournisseur',
+        component: NouveauCltFrsComponent,
+        canActivate: [ApplicationGuardService],
+        data: {
+          origin: 'fournisseur'
+        }
+      },
+      {
+        path: 'nouveaufournisseur/:id',
         component: NouveauCltFrsComponent,
         canActivate: [ApplicationGuardService],
         data: {
