@@ -1,6 +1,9 @@
 <div class="col mb-3">
   <div class="col-md-12 my-3 px-5">
-    <img src="favicon.ico" class="rounded-circle" width="200px" height="200px">
+    <button (click)="fileInput.click()" style="background-color: transparent; border: none">
+      <img [src]="imgUrl" class="rounded-circle" width="200px" height="200px">
+      <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)">
+    </button>
   </div>
   <hr/>
   <div class="col-md-12 px-5">

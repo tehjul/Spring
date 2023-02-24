@@ -56,7 +56,6 @@ export class NouvelArticleComponent implements OnInit {
     this.articleService.enregistrerArticle(this.articleDto)
       .subscribe(art => {
         this.savePhoto(art.id, art.codeArticle);
-        this.navigateToArticle();
       }, error => {
         this.errorMsg = error.error.errors;
       });

@@ -4,6 +4,8 @@ import {ClientDto} from "../../../gs-api/src/models/client-dto";
 import {AdresseDto} from "../../../gs-api/src/models/adresse-dto";
 import {CltFrsService} from "../../services/cltfrs/cltfrs.service";
 import {FournisseurDto} from "../../../gs-api/src/models/fournisseur-dto";
+import {PhotosService} from "../../../gs-api/src/services/photos.service";
+import SavePhotoParams = PhotosService.SavePhotoParams;
 
 @Component({
   selector: 'app-nouveau-clt-frs',
@@ -17,6 +19,16 @@ export class NouveauCltFrsComponent implements OnInit {
   clientFournisseur: any = {};
   adresseDto: AdresseDto = {};
   errorMsg: Array<string> = [];
+  file: File | null = null;
+  imgUrl: string | ArrayBuffer = 'favicon.ico';
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private cltFrsService: CltFrsService,
+    private photoService: PhotosService
+  ) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
@@ -44,18 +56,7 @@ export class NouveauCltFrsComponent implements OnInit {
     }
   }
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private cltFrsService: CltFrsService
-  ) {
-  }
-
-  saveClick(): void {
-
-  }
-
-  cancelClick(): void {
+  navigateToClientOrFournisseur(): void {
     if (this.origin === 'client') {
       this.navigateToClient();
     } else if (this.origin === 'fournisseur') {
@@ -63,18 +64,22 @@ export class NouveauCltFrsComponent implements OnInit {
     }
   }
 
+  cancelClick(): void {
+    this.navigateToClientOrFournisseur();
+  }
+
   enregistrer() {
     if (this.origin === 'client') {
       this.cltFrsService.enregistrerClient(this.mapToClient())
         .subscribe(client => {
-          this.navigateToClient();
+          this.savePhoto(client.id, client.nom);
         }, error => {
           this.errorMsg = error.error.errors;
         });
     } else if (this.origin === 'fournisseur') {
       this.cltFrsService.enregistrerFournisseur(this.mapToFournisseur())
-        .subscribe(client => {
-          this.navigateToFournisseur();
+        .subscribe(frs => {
+          this.savePhoto(frs.id, frs.nom);
         }, error => {
           this.errorMsg = error.error.errors;
         });
@@ -99,6 +104,38 @@ export class NouveauCltFrsComponent implements OnInit {
 
   navigateToFournisseur(): void {
     this.router.navigate(['fournisseurs']);
+  }
+
+  onFileInput(files: FileList | null): void {
+    if (files) {
+      this.file = files.item(0);
+      if (this.file) {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(this.file);
+        fileReader.onload = (event) => {
+          if (fileReader.result) {
+            this.imgUrl = fileReader.result;
+          }
+        }
+      }
+    }
+  }
+
+  savePhoto(idCltFrs?: number, titre?: string): void {
+    if (idCltFrs && titre && this.file) {
+      const params: SavePhotoParams = {
+        id: idCltFrs,
+        file: this.file,
+        title: titre,
+        context: this.origin
+      };
+      this.photoService.savePhoto(params)
+        .subscribe(res => {
+          this.navigateToClientOrFournisseur();
+        })
+    } else {
+      this.navigateToClientOrFournisseur();
+    }
   }
 
 }
