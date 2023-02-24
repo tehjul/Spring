@@ -17,12 +17,14 @@ export class NouvelleCmdCltFrsComponent implements OnInit {
   selectedClientFournisseur: ClientDto = {};
   listClientsFournisseurs: Array<ClientDto> = [];
   searchedArticle: ArticleDto = {};
+  listArticle: Array<ArticleDto> = [];
   articleErrorMsg = '';
   codeArticle = '';
   quantite = '';
 
   lignesCommande: Array<LigneCommandeClientDto> = [];
   totalCommande = 0;
+  articleNotYetSelected = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,6 +39,7 @@ export class NouvelleCmdCltFrsComponent implements OnInit {
       this.origin = data['origin'];
     });
     this.findAllCltFrs();
+    this.findAllArticles();
   }
 
   findAllCltFrs(): void {
@@ -48,6 +51,13 @@ export class NouvelleCmdCltFrsComponent implements OnInit {
     } else if (this.origin === 'fournisseur') {
 
     }
+  }
+
+  findAllArticles(): void {
+    this.articleService.findAllArticles()
+      .subscribe(articles => {
+        this.listArticle = articles;
+      })
   }
 
   findArticleByCode(codeArticle: string) {
@@ -64,7 +74,10 @@ export class NouvelleCmdCltFrsComponent implements OnInit {
   }
 
   searchArticle(): void {
-    this.findArticleByCode(this.codeArticle);
+    if (this.codeArticle.length === 0) {
+      this.findAllArticles();
+    }
+    this.listArticle = this.listArticle.filter(art => art.codeArticle?.startsWith(this.codeArticle) || art.designation?.startsWith(this.codeArticle));
   }
 
   ajouterLigneCommande(): void {
@@ -82,5 +95,12 @@ export class NouvelleCmdCltFrsComponent implements OnInit {
     this.searchedArticle = {};
     this.quantite = '';
     this.codeArticle = '';
+    this.articleNotYetSelected = false;
+  }
+
+  selectArticle(art: ArticleDto): void {
+    this.searchedArticle = art;
+    this.codeArticle = art.codeArticle ? art.codeArticle : '';
+    this.articleNotYetSelected = true;
   }
 }
