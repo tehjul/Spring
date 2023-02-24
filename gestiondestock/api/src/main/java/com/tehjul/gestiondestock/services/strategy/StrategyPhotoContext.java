@@ -31,19 +31,19 @@ public class StrategyPhotoContext {
         final String beanName = context + "Strategy";
         switch (context) {
             case "article":
-                beanFactory.getBean(beanName, SaveArticlePhoto.class);
+                strategy = beanFactory.getBean(beanName, SaveArticlePhoto.class);
                 break;
             case "client":
-                beanFactory.getBean(beanName, SaveClientPhoto.class);
+                strategy = beanFactory.getBean(beanName, SaveClientPhoto.class);
                 break;
             case "entreprise":
-                beanFactory.getBean(beanName, SaveEntreprisePhoto.class);
+                strategy = beanFactory.getBean(beanName, SaveEntreprisePhoto.class);
                 break;
             case "fournisseur":
-                beanFactory.getBean(beanName, SaveFournisseurPhoto.class);
+                strategy = beanFactory.getBean(beanName, SaveFournisseurPhoto.class);
                 break;
             case "utilisateur":
-                beanFactory.getBean(beanName, SaveUtilisateurPhoto.class);
+                strategy = beanFactory.getBean(beanName, SaveUtilisateurPhoto.class);
                 break;
             default:
                 throw new InvalidOperationException("Contexte inconnu pour l'enregistrement de la photo", ErrorCodes.UNKNOWN_CONTEXT);
