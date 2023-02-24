@@ -64,9 +64,7 @@ public class ArticleServiceImpl implements ArticleService {
             log.error("Article ID is null");
             return null;
         }
-        Optional<Article> article = articleRepository.findById(id);
-        ArticleDto dto = ArticleDto.fromEntity(article.get());
-        return Optional.of(dto).orElseThrow(() ->
+        return articleRepository.findById(id).map(ArticleDto::fromEntity).orElseThrow(() ->
                 new EntityNotFoundException(
                         "Aucun article avec l'ID = " + id + " n'a été trouvé dans la BDD",
                         ErrorCodes.ARTICLE_NOT_FOUND
@@ -80,9 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
             log.error("Article CODE is null");
             return null;
         }
-        Optional<Article> article = articleRepository.findArticleByCodeArticle(codeArticle);
-        ArticleDto dto = ArticleDto.fromEntity(article.get());
-        return Optional.of(dto).orElseThrow(() ->
+        return articleRepository.findArticleByCodeArticle(codeArticle).map(ArticleDto::fromEntity).orElseThrow(() ->
                 new EntityNotFoundException(
                         "Aucun article avec le CODE = " + codeArticle + " n'a été trouvé dans la BDD",
                         ErrorCodes.ARTICLE_NOT_FOUND
