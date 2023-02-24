@@ -35,6 +35,7 @@ import {ChangerMotDePasseComponent} from './pages/profil/changer-mot-de-passe/ch
 import {FormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorService} from "./services/interceptor/http-interceptor.service";
+import { LoaderComponent } from './composants/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import {HttpInterceptorService} from "./services/interceptor/http-interceptor.se
     DetailUtilisateurComponent,
     NouvelUtilisateurComponent,
     PageProfilComponent,
-    ChangerMotDePasseComponent
+    ChangerMotDePasseComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

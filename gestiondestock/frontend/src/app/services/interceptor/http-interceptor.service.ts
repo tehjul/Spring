@@ -1,18 +1,22 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
+import {Observable, tap} from "rxjs";
 import {AuthenticationResponse} from "../../../gs-api/src/models/authentication-response";
+import {LoaderService} from "../../composants/loader/service/loader.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  constructor() {
+  constructor(
+    private loaderService: LoaderService
+  ) {
   }
 
   // @ts-ignore
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.loaderService.show();
     let authenticationResponse: AuthenticationResponse = {};
     if (localStorage.getItem('accessToken')) {
       authenticationResponse = JSON.parse(
@@ -23,8 +27,19 @@ export class HttpInterceptorService implements HttpInterceptor {
           Authorization: 'Bearer ' + authenticationResponse.accessToken
         })
       });
-      return next.handle(authReq);
+      return this.handleRequest(authReq, next);
     }
-    return next.handle(req);
+    return this.handleRequest(req, next);
+  }
+
+  handleRequest(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req)
+      .pipe(tap((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          this.loaderService.hide();
+        }
+      }, (error: any) => {
+        this.loaderService.hide();
+      }));
   }
 }
