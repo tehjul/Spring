@@ -3,6 +3,11 @@
     <div class="col-md-12 my-3">
       <h2>Nouvelle commande {{origin}}</h2>
     </div>
+    <div class="alert alert-danger" *ngIf="errorMsg.length > 0">
+      <div *ngFor="let msg of errorMsg">
+        <span>{{msg}}</span>
+      </div>
+    </div>
     <div class="row p-3 custom-border">
       <div class="col-md-5 border-right">
         <form>
@@ -23,7 +28,7 @@
         </form>
       </div>
 
-      <div class="col-md-5 border-right">
+      <div class="col-md-5 border-right" *ngIf="selectedClientFournisseur.nom">
         <div class="col">
           <div class="row">
             <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
@@ -39,11 +44,11 @@
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fa-solid fa-hourglass-half blue-color"></i></div>
-            <div class="col-md-11">EN PREPARATION</div>
+            <div class="col-md-11 text-primary">EN PREPARATION</div>
           </div>
         </div>
       </div>
-      <div class="col-md-2 text-center">
+      <div class="col-md-2 text-center" *ngIf="selectedClientFournisseur.photo">
         <img [src]="selectedClientFournisseur.photo ? selectedClientFournisseur.photo : 'favicon.ico'"
              class="rounded-circle" width="160px" height="160px">
       </div>
@@ -55,9 +60,10 @@
             <input type="text" class="form-control" placeholder="Code Article" name="codearticle"
                    [(ngModel)]="codeArticle"
                    (input)="searchArticle()">
-            <div *ngIf="codeArticle.length && !articleNotYetSelected" class="autocomplete shadow p-3 mb-5 bg-white rounded">
+            <div *ngIf="codeArticle.length && !articleNotYetSelected"
+                 class="autocomplete shadow p-3 mb-5 bg-white rounded">
               <p class="p-1" *ngFor="let art of listArticle"
-              (click)="selectArticle(art)">
+                 (click)="selectArticle(art)">
                 {{art.codeArticle}}&nbsp; {{art.designation}}
               </p>
             </div>
@@ -88,7 +94,7 @@
       <i class="fa-solid fa-ban"></i>&nbsp;
       Annuler
     </button>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="enregistrerCommande()">
       <i class="fa-solid fa-save"></i>&nbsp;
       Enregistrer
     </button>
