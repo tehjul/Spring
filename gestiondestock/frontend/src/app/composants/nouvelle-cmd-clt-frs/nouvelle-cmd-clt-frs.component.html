@@ -13,12 +13,11 @@
             <input type="text" class="form-control" placeholder="Date commande">
           </div>
           <div class="mb-3">
-            <select class="form-control">
-              <option>Selectionner un client</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
+            <select class="form-control" name="cltFrs" [(ngModel)]="selectedClientFournisseur">
+              <option>Selectionner un {{origin}}</option>
+              <option *ngFor="let obj of listClientsFournisseurs" [ngValue]="obj">
+                {{obj.nom}}&nbsp;{{obj.prenom}}
+              </option>
             </select>
           </div>
         </form>
@@ -28,15 +27,15 @@
         <div class="col">
           <div class="row">
             <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-            <div class="col-md-11">Nom</div>
+            <div class="col-md-11">{{selectedClientFournisseur.nom}}</div>
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-            <div class="col-md-11">Prénom</div>
+            <div class="col-md-11">{{selectedClientFournisseur.prenom}}</div>
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fa-solid fa-phone blue-color"></i></div>
-            <div class="col-md-11">0011 22 33 44 55</div>
+            <div class="col-md-11">{{selectedClientFournisseur.numTel}}</div>
           </div>
           <div class="row">
             <div class="col-md-1"><i class="fa-solid fa-hourglass-half blue-color"></i></div>
@@ -45,40 +44,40 @@
         </div>
       </div>
       <div class="col-md-2 text-center">
-        <img src="favicon.ico" class="rounded-circle" width="160px" height="160px">
+        <img [src]="selectedClientFournisseur.photo ? selectedClientFournisseur.photo : 'favicon.ico'"
+             class="rounded-circle" width="160px" height="160px">
       </div>
     </div>
     <div class="row mt-2 p-3 custom-border">
+      <div class="alert alert-danger" *ngIf="articleErrorMsg">
+        {{articleErrorMsg}}
+      </div>
       <form>
         <div class="row">
           <div class="col">
-            <input type="text" class="form-control" placeholder="Code Article">
+            <input type="text" class="form-control" placeholder="Code Article" name="codearticle"
+                   [(ngModel)]="codeArticle"
+                   (input)="searchArticle()">
           </div>
           <div class="col">
-            <input type="text" class="form-control" placeholder="Quantité">
+            <input type="text" class="form-control" placeholder="Quantité" name="quantite" [(ngModel)]="quantite">
           </div>
           <div class="col">
-            <input type="text" class="form-control" placeholder="Prix unitaire">
+            <input type="text" class="form-control" placeholder="Prix unitaire" name="prixunitairettc"
+                   [(ngModel)]="searchedArticle.prixUnitaireTtc">
           </div>
           <div class="col">
-            <button type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+            <button type="button" class="btn btn-success" (click)="ajouterLigneCommande()"><i
+              class="fa-solid fa-plus"></i></button>
           </div>
         </div>
       </form>
     </div>
     <div class="row mt-2 p-3 custom-border" style="max-height: 300px; overflow-y: scroll;">
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
-      <app-detail-cmd></app-detail-cmd>
+      <app-detail-cmd *ngFor="let ligne of lignesCommande" [ligneCommande]="ligne"></app-detail-cmd>
     </div>
     <div class="row mt-2 p-3 custom-border text-end">
-      <h3>Total de la commande : 135.9€</h3>
+      <h3>Total de la commande : {{totalCommande}}€</h3>
     </div>
   </div>
   <div class="col-md-12 text-end px-5 mt-2">

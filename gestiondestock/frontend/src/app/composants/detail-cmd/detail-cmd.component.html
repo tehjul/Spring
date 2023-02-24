@@ -3,14 +3,14 @@
   <!--  Date-->
   <div class="col-md-3 border-right my-1">
     <div class="row text-center">
-      <div class="col-md-11">Code Article</div>
+      <div class="col-md-11">{{ligneCommande.article?.codeArticle}}</div>
     </div>
   </div>
   <!-- Quantité -->
   <div class="col-md-3 border-right my-1">
     <div class="row">
       <div class="col-md-12 text-center">
-        Désignation article
+        {{ligneCommande.article?.designation}}
       </div>
     </div>
   </div>
@@ -18,7 +18,7 @@
   <div class="col-md-2 border-right my-1">
     <div class="row">
       <div class="col-md-12 text-center">
-        6
+        {{ligneCommande.quantite}}
       </div>
     </div>
   </div>
@@ -26,14 +26,14 @@
   <div class="col-md-2 border-right my-1">
     <div class="row">
       <div class="col-md-12 text-center">
-        12,3€
+        {{ligneCommande.prixUnitaire}}
       </div>
     </div>
   </div>
   <!--  Boutons action-->
   <div class="col-md-2 my-1 text-center">
     <div class="row">
-      73,8€
+      {{ligneCommande.prixUnitaire && ligneCommande.quantite ? ligneCommande.prixUnitaire * ligneCommande.quantite : '- '}}€
     </div>
   </div>
 </div>

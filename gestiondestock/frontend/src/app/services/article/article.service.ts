@@ -37,4 +37,8 @@ export class ArticleService {
     }
     return of();
   }
+
+  findArticleByCode(codeArticle: string): Observable<ArticleDto> {
+    return this.articleService.findByCodeArticle(codeArticle);
+  }
 }

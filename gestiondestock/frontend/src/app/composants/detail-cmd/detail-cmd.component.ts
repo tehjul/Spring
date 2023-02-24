@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {LigneCommandeClientDto} from "../../../gs-api/src/models/ligne-commande-client-dto";
 
 @Component({
   selector: 'app-detail-cmd',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class DetailCmdComponent {
 
+  @Input()
+  ligneCommande: LigneCommandeClientDto = {};
 }
