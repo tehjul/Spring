@@ -82,7 +82,10 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             dto.getLigneCommandeFournisseurs().forEach(ligne -> {
                 LigneCommandeFournisseur ligneCommandeFournisseur = LigneCommandeFournisseurDto.toEntity(ligne);
                 ligneCommandeFournisseur.setCommandeFournisseur(savedCommandeFournisseur);
-                ligneCommandeFournisseurRepository.save(ligneCommandeFournisseur);
+                ligneCommandeFournisseur.setIdEntreprise(dto.getIdEntreprise());
+                LigneCommandeFournisseur savedLigne = ligneCommandeFournisseurRepository.save(ligneCommandeFournisseur);
+
+                effectuerEntree(savedLigne);
             });
         }
 
@@ -236,7 +239,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
             log.error("Commande fournisseur ID is NULL");
             return;
         }
-        List<LigneCommandeFournisseur> ligneCommandeFournisseurs= ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(id);
+        List<LigneCommandeFournisseur> ligneCommandeFournisseurs = ligneCommandeFournisseurRepository.findAllByCommandeFournisseurId(id);
         if (!ligneCommandeFournisseurs.isEmpty()) {
             throw new InvalidOperationException("Impossible de supprimer une commande fournisseur déjà utilisée", ErrorCodes.COMMANDE_FOURNISSEUR_ALREADY_IN_USE);
         }

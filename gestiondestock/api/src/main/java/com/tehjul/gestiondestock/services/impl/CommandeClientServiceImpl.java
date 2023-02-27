@@ -82,14 +82,17 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             log.warn("");
             throw new InvalidEntityException("Article n'existe pas dans la BDD", ErrorCodes.ARTICLE_NOT_FOUND, articleErrors);
         }
-
+        dto.setDateCommande(Instant.now());
         CommandeClient savedCommandeClient = commandeClientRepository.save(CommandeClientDto.toEntity(dto));
 
         if (dto.getLigneCommandeClients() != null) {
             dto.getLigneCommandeClients().forEach(ligne -> {
                 LigneCommandeClient ligneCommandeClient = LigneCommandeClientDto.toEntity(ligne);
                 ligneCommandeClient.setCommandeClient(savedCommandeClient);
-                ligneCommandeClientRepository.save(ligneCommandeClient);
+                ligneCommandeClient.setIdEntreprise(dto.getIdEntreprise());
+                LigneCommandeClient savedLigneCmd = ligneCommandeClientRepository.save(ligneCommandeClient);
+
+                effectuerSortie(savedLigneCmd);
             });
         }
 
@@ -245,7 +248,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             log.error("Commande client ID is NULL");
             return;
         }
-        List<LigneCommandeClient> ligneCommandeClients= ligneCommandeClientRepository.findAllByCommandeClientId(id);
+        List<LigneCommandeClient> ligneCommandeClients = ligneCommandeClientRepository.findAllByCommandeClientId(id);
         if (!ligneCommandeClients.isEmpty()) {
             throw new InvalidOperationException("Impossible de supprimer une commande client déjà utilisée", ErrorCodes.COMMANDE_CLIENT_ALREADY_IN_USE);
         }
@@ -302,5 +305,18 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                     .build();
             mvtStkService.sortieStock(mvtStkDto);
         });
+    }
+
+
+    private void effectuerSortie(LigneCommandeClient ligne) {
+        MvtStkDto mvtStkDto = MvtStkDto.builder()
+                .article(ArticleDto.fromEntity(ligne.getArticle()))
+                .dateMvt(Instant.now())
+                .typeMvt(TypeMvtStk.SORTIE)
+                .sourceMvt(SourceMvtStk.COMMANDE_CLIENT)
+                .quantite(ligne.getQuantite())
+                .idEntreprise(ligne.getIdEntreprise())
+                .build();
+        mvtStkService.sortieStock(mvtStkDto);
     }
 }
