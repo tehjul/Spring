@@ -12,33 +12,36 @@
     </div>
   </div>
 
-  <div class="col m-3">
-    <div class="accordion accordion-flush" id="accordionExample">
+  <div class="col m-3" *ngFor="let cmd of listeCommandes">
+    <div class="accordion accordion-flush" id="accordionExample{{cmd.id}}">
       <div class="accordion-item mb-2">
         <div class="accordion-header" id="headingOne">
-          <h2 class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+          <h2 class="accordion-button" type="button" data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#collapseOne'+cmd.id"
+              (click)="findAllLigneCommande(cmd.id)"
               aria-expanded="true" aria-controls="collapseOne">
           </h2>
-          <app-detail-cmd-clt-frs></app-detail-cmd-clt-frs>
+          <app-detail-cmd-clt-frs
+            [commande]="cmd"
+            [origin]="origin"
+          ></app-detail-cmd-clt-frs>
         </div>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-             data-bs-parent="#accordionExample" style="max-height: 200px; overflow-y: scroll">
+        <div id="collapseOne{{cmd.id}}" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+             [attr.data-bs-parent]="'#accordionExample'+cmd.id" style="max-height: 200px; overflow-y: scroll">
           <div class="accordion-body">
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
-            <app-detail-cmd></app-detail-cmd>
+            <app-detail-cmd
+              *ngFor="let ligne of mapLignesCommande.get(cmd.id)"
+              [ligneCommande]="ligne"
+            ></app-detail-cmd>
           </div>
         </div>
         <div class="card-footer">
           <div class="row">
             <div class="col-md-6 text-start">
-              <h5>12 articles commandés</h5>
+              <h5>{{calculerNbLignes(cmd.id)}} articles commandés</h5>
             </div>
             <div class="col-md-6 text-end">
-              <h5>Total commande : 123.45€</h5>
+              <h5>Total commande : {{calculerTotalCommande(cmd.id)}}€</h5>
             </div>
           </div>
         </div>

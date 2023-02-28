@@ -8,15 +8,15 @@
     <div class="col">
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-        <div class="col-md-11">Nom</div>
+        <div class="col-md-11">{{cltFrs?.nom}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-circle-info blue-color"></i></div>
-        <div class="col-md-11">Prénom</div>
+        <div class="col-md-11">{{cltFrs?.prenom}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-phone-alt blue-color"></i></div>
-        <div class="col-md-11">011 22 33 44 55</div>
+        <div class="col-md-11">{{cltFrs?.numTel}}</div>
       </div>
     </div>
   </div>
@@ -25,15 +25,15 @@
     <div class="col">
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-qrcode blue-color"></i></div>
-        <div class="col-md-11">CMD-123456789</div>
+        <div class="col-md-11">{{commande.code}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-calendar-check blue-color"></i></div>
-        <div class="col-md-11">12.12.2012</div>
+        <div class="col-md-11">{{commande.dateCommande}}</div>
       </div>
       <div class="row">
         <div class="col-md-1"><i class="fa-solid fa-cart-arrow-down blue-color"></i></div>
-        <div class="col-md-11">Livrée</div>
+        <div class="col-md-11">{{commande.etatCommande}}</div>
       </div>
     </div>
   </div>
