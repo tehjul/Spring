@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: api
+    ports:
+      - 8881:8881
+    networks:
+      - spring-sql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql:3306/gestionstock?createDatabaseIfNotExist=true&userSSL=false?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_PASSWORD=secret
+    depends_on:
+      - docker-mysql
+  
+  docker-mysql:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - spring-sql
+    expose:
+      - 3306
+volumes:
+  db-data:
+networks:
+  spring-sql:
